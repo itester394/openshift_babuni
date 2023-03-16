@@ -1,0 +1,58 @@
+##check openshift node or pod current utilization of network bandwidth
+##Testing Network Bandwidth in OpenShift using iPerf Container.
+
+https://access.redhat.com/articles/5233541
+
+#step-1 create a Dockerfile
+$ vi Dockerfile
+FROM registry.redhat.io/rhel7/rhel ##FROM docker.io/centos:7 if you dont have subscription
+RUN yum install -y iperf3
+ENTRYPOINT trap : TERM INT; sleep infinity & wait ##Listen for kill signals and exit quickly.
+
+#Step-2 build the docker image
+$ podman build -t quay.io/example/iperf .
+$ docker build -t quay.io/example/iperf .
+
+#Step-3 push to the openshift internal registry
+$ oc login -u $(oc whoami) -p $(oc whoami -t) <openshift-internal-registry>
+
+#Step-4 Deploy Server and Client iPerf Pods
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-server
+spec:
+  containers:
+  - name: server
+    image: quay.io/example/iperf  ##replace and add the openshift internal registry
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-client
+spec:
+  containers:
+  - name: client
+    image: quay.io/example/iperf  ##replace and add the openshift internal registry
+    
+ 
+ #create the ipert pods
+ $ oc create -f filename.yaml
+ $ oc get po -owide
+ 
+ 
+ #Step-6 Now that the iPerf client and server are running, validate the network bandwidth
+ #from server pod execute below commands
+ $ oc exec -it iperf-server -- iperf3 -i 5 -s
+
+-----------------------------------------------------------
+Server listening on 5201
+--------------------------
+
+#from client pod
+$ oc exec -it iperf-client -- iperf3 -i 5 -t 60 -c $(oc get pod iperf-server -o jsonpath='{.status.podIP}')
+
+or
+
+$ oc exec -it iperf-client -- iperf3 -i 5 -t 60 -c <iPerf Server Pod IP>
+
