@@ -1,0 +1,9 @@
+##Unable to login openshift cluster using username/password [x509 certificate issues]
+
+https://access.redhat.com/solutions/4505101
+
+$ oc rsh -n openshift-authentication <oauth-openshift-pod> cat /run/secrets/kubernetes.io/serviceaccount/ca.crt > ingress-ca.crt
+$ oc login -u username -p password https://api.example.local:6443 --certificate-authority=ingress-ca.crt
+$cp   ingress-ca.crt  /etc/pki/ca-trust/source/anchors/
+$update-ca-trust extract
+$oc login -u xxxx -p xxx 
