@@ -1,0 +1,27 @@
+##how to set max limit network bandwidth for a application
+
+https://access.redhat.com/solutions/5018951
+https://docs.openshift.com/container-platform/4.12/nodes/pods/nodes-pods-configuring.html
+
+#add below annatation on your pod deployment file
+
+    kubernetes.io/ingress-bandwidth: 2M
+    kubernetes.io/egress-bandwidth: 1M
+
+
+#example-01
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: hello-openshift
+  annotations:
+    kubernetes.io/ingress-bandwidth: 2M
+    kubernetes.io/egress-bandwidth: 1M
+spec:
+    containers:
+      - image: openshift/hello-openshift
+        name: hello-openshift
+        
+   
+     
