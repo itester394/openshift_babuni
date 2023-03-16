@@ -56,3 +56,62 @@ or
 
 $ oc exec -it iperf-client -- iperf3 -i 5 -t 60 -c <iPerf Server Pod IP>
 
+
+#output looks like
+
+#server pod output
+
+$ oc exec -it iperf-server -- iperf3 -i 5 -s
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+Accepted connection from 10.131.2.12, port 50062
+[  5] local 10.130.2.15 port 5201 connected to 10.131.2.12 port 50064
+[ ID] Interval           Transfer     Bandwidth
+[  5]   0.00-5.00   sec  2.22 GBytes  3.82 Gbits/sec                  
+[  5]   5.00-10.00  sec  2.26 GBytes  3.88 Gbits/sec                  
+[  5]  10.00-15.00  sec  2.22 GBytes  3.82 Gbits/sec                  
+[  5]  15.00-20.00  sec  2.23 GBytes  3.84 Gbits/sec                  
+[  5]  20.00-25.00  sec  2.22 GBytes  3.81 Gbits/sec                  
+[  5]  25.00-30.00  sec  2.23 GBytes  3.84 Gbits/sec                  
+[  5]  30.00-35.00  sec  2.26 GBytes  3.88 Gbits/sec                  
+[  5]  35.00-40.00  sec  2.26 GBytes  3.88 Gbits/sec                  
+[  5]  40.00-45.00  sec  2.26 GBytes  3.89 Gbits/sec                  
+[  5]  45.00-50.00  sec  2.15 GBytes  3.69 Gbits/sec                  
+[  5]  50.00-55.00  sec  2.23 GBytes  3.83 Gbits/sec                  
+[  5]  55.00-60.00  sec  2.18 GBytes  3.75 Gbits/sec                  
+[  5]  60.00-60.04  sec  18.0 MBytes  3.81 Gbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth
+[  5]   0.00-60.04  sec  0.00 Bytes  0.00 bits/sec                  sender
+[  5]   0.00-60.04  sec  26.7 GBytes  3.83 Gbits/sec                  receiver
+-----------------------------------------------------------
+Server listening on 5201
+-----------------------------------------------------------
+
+
+#client pod output
+
+$ oc exec -it iperf-client -- iperf3 -i 5 -t 60 -c $(oc get pod iperf-server -o jsonpath='{.status.podIP}')
+Connecting to host 10.130.2.15, port 5201
+[  4] local 10.131.2.12 port 50064 connected to 10.130.2.15 port 5201
+[ ID] Interval           Transfer     Bandwidth       Retr  Cwnd
+[  4]   0.00-5.00   sec  2.24 GBytes  3.85 Gbits/sec  195   1.25 MBytes       
+[  4]   5.00-10.00  sec  2.26 GBytes  3.88 Gbits/sec   58   1.18 MBytes       
+[  4]  10.00-15.00  sec  2.22 GBytes  3.82 Gbits/sec  531   1.06 MBytes       
+[  4]  15.00-20.00  sec  2.23 GBytes  3.84 Gbits/sec  243   1.08 MBytes       
+[  4]  20.00-25.00  sec  2.22 GBytes  3.81 Gbits/sec   13   1018 KBytes       
+[  4]  25.00-30.00  sec  2.23 GBytes  3.84 Gbits/sec   13    926 KBytes       
+[  4]  30.00-35.00  sec  2.26 GBytes  3.88 Gbits/sec   92    980 KBytes       
+[  4]  35.00-40.00  sec  2.26 GBytes  3.88 Gbits/sec   15   1.27 MBytes       
+[  4]  40.00-45.00  sec  2.26 GBytes  3.89 Gbits/sec  159   1.21 MBytes       
+[  4]  45.00-50.00  sec  2.15 GBytes  3.69 Gbits/sec  340   1.14 MBytes       
+[  4]  50.00-55.00  sec  2.23 GBytes  3.83 Gbits/sec   63    939 KBytes       
+[  4]  55.00-60.00  sec  2.18 GBytes  3.75 Gbits/sec   15   1.29 MBytes       
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-60.00  sec  26.8 GBytes  3.83 Gbits/sec  1737             sender
+[  4]   0.00-60.00  sec  26.7 GBytes  3.83 Gbits/sec                  receiver
+
+iperf Done.
+
