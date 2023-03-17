@@ -10,6 +10,6 @@ $etcdctl get /kubernetes.io/pods/demo/httpd-app
 $etcdctl get /kubernetes.io/secrets/demo/my-secrets
 
 
-```
+,,,
 $oc get no
-```
+,,,
