@@ -11,7 +11,5 @@ $etcdctl get /kubernetes.io/secrets/demo/my-secrets
 
 
 ```
-
 $oc get no
-
 ```
