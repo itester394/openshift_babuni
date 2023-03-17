@@ -9,6 +9,8 @@ $etcdctl get /kubernetes.io/services/endpoints/openshift-network-operator/metric
 $etcdctl get /kubernetes.io/pods/demo/httpd-app
 $etcdctl get /kubernetes.io/secrets/demo/my-secrets
 
-'''php
-oc get no
-'''
+```php
+  
+  oc get no
+
+```
