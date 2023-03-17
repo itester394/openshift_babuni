@@ -1,5 +1,5 @@
 ##get and validate etcd data using command line. if etcd database is not encrypted 
-
+'''
 $oc get po -n openshift-etcd
 $oc rsh po <pod-name> -n openshift-etcd
 
@@ -8,3 +8,4 @@ $etcdctl get /kubernetes.io/<resourcetype>/<namespace>/<resourcename>
 $etcdctl get /kubernetes.io/services/endpoints/openshift-network-operator/metrics
 $etcdctl get /kubernetes.io/pods/demo/httpd-app
 $etcdctl get /kubernetes.io/secrets/demo/my-secrets
+'''
