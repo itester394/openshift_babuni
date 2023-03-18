@@ -1,0 +1,23 @@
+
+
+$ oc new-project git-webhook
+$ oc new-app https://github.com/sairbabu58/php-demo.git
+$ oc describe bc/php-demo #(copy the generic webhook)
+ 
+Webhook GitHub:
+      URL:  https://api.cluster-eda2.eda2.sandbox596.opentlc.com:6443/apis/build.openshift.io/v1/namespaces/demo05/buildconfigs/php-demo/webhooks/<secret>/github
+Webhook Generic:
+      URL:       https://api.cluster-eda2.eda2.sandbox596.opentlc.com:6443/apis/build.openshift.io/v1/namespaces/demo05/buildconfigs/php-demo/webhooks/<secret>/generic
+      AllowEnv:  false
+ 
+$ oc edit bc/php-demo #(copy the token)
+$ oc get bc/name -oyaml
+ 
+triggers:
+  - github:
+      secret: t65rQ2nlhxaobTKvhl0j
+    type: GitHub
+  - generic:
+      secret: mOxAOaaOyAnX53Obc8AQ
+      
+ 
