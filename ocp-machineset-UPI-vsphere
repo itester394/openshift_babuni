@@ -11,7 +11,7 @@ metadata:
     name: worker-machine # new worker node name
     namespace: openshift-machine-api
 spec:
-    replicas: 1
+    replicas: 0 # change the value to 1
     selector:
         matchLabels:
             machine.openshift.io/cluster-api-cluster: oscp-zsqpl #cluster ID
@@ -53,5 +53,7 @@ spec:
  ---
  
  $ oc apply -f machineset.yaml
+ $ oc get machineset
+ $oc get machine
  
  
