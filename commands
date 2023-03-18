@@ -9,14 +9,19 @@ $ skopeo delete docker://<registory/rhel/demo01>
 
 #OpenShift commands
 
-$oc import-image https:latest --confirm --form quay.io/rhel/httpd
-$oc get is
+$ oc import-image https:latest --confirm --form quay.io/rhel/httpd
+$ oc get is
+$ for x in $(oc -n demo get po -l deployment=demo -oname); do oc -n demo rsh $x ls; done  
+$ for x in $(oc -n demo get po -l deployment=demo | awk ‘{print $1}’); do oc -n demo rsh $x ls; done
 
 
 
 #RH commands
 $ yes > /dev/null & 
 $ dd if=/dev/zero of=/mnt/swap.0 bs=1024 count=1048576
+$ while sleep 2; do date; done 
+$ while sleep 1; do curl 192.168.56.110; done 
+
 
 
 
