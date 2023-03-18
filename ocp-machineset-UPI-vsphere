@@ -1,7 +1,7 @@
 ##Get the cluster ID
 $ oc get infrastructure cluster -o jsonpath='{.status.infrastructureName}{"\n"}' 
 
-
+---
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
@@ -50,3 +50,8 @@ spec:
                         resourcepool: /MUC/host/CL-DEV/Resources
                         folder: /MUC/vm/OpenShift-Services # e.g. /DC/vm/ocp45-2tdrm
                         server: vcenter.example.com
+ ---
+ 
+ $ oc apply -f machineset.yaml
+ 
+ 
