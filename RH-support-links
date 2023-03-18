@@ -15,4 +15,5 @@ https://access.redhat.com (search your issues on the search bar)
 ##OpenShift version support date and life cycle policy 
 https://access.redhat.com/support/policy/updates/openshift
 
-##
+##RHACM policy
+https://github.com/redhat-gpte-devopsautomation/rhacm-labs/tree/master/resources/policies
