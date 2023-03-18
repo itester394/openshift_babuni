@@ -10,7 +10,7 @@ Webhook Generic:
       URL:       https://api.cluster-eda2.eda2.sandbox596.opentlc.com:6443/apis/build.openshift.io/v1/namespaces/demo05/buildconfigs/php-demo/webhooks/<secret>/generic
       AllowEnv:  false
  
-$ oc edit bc/php-demo #(copy the token)
+$ oc edit bc/php-demo #(copy the secret)
 $ oc get bc/name -oyaml
  
 triggers:
