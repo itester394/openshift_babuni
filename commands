@@ -1,0 +1,10 @@
+#skopeo commands
+
+$ skopeo inspect --certs username:password docker://quay.io/rhel/httpd | less
+$ skopeo inspect --crerts username:$pass docker://quay.io/rhel/http
+$ skopeo copy <local-images> --dest-creds=username:password docker://<target-registory>
+$ skopeo copy --src-creds=user:password --dest-creds=user:password docker://<registory/demo/app1> docker://<registory/rhel/app1>
+$ skopeo delete docker://<registory/rhel/demo01>
+
+$oc import-image https:latest --confirm --form quay.io/rhel/httpd
+$oc get is
