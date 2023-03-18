@@ -53,3 +53,14 @@ $ openshift-install create install-config --dir config
   
  $ openshift-install create cluster --dir config
  
+ # Login and validation
+ 
+ $ export KUBECONFIG=IPI/config/auth/kubeconfig 
+ $ oc get no
+ $ oc get co
+ $ oc get clusterversion
+ 
+ $ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"emptyDir":{}}}}' # optional
+ $ oc edit configs.imageregistry.operator.openshift.io (manageState: Managed) # optional
+ 
+ 
