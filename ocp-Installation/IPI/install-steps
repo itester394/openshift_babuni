@@ -1,1 +1,26 @@
 #IPI installation on vSphere Env
+
+# Download all the OpenShift binary (oc cli, kubelet cli, openshift-installer, pull-secret, OVA-template optional)
+https://console.redhat.com/openshift
+https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/ (ova template for disconnected Env)
+
+# create a build/jump machine and follow the below steps
+
+$ ssh-keygen
+
+$ download oc cli
+$ download openshift-installer
+$ download pull-secret
+(https://console.redhat.com/openshift/install/vsphere/installer-provisioned)
+
+$ tar -xvzf openshift-install-linux.tar.gz
+$ tar -xvzf openshift-client-linux.tar.gz
+
+$ chmod +x oc
+$ chmod +x kubelet
+$ chmod +x openshift-install
+
+$ cp oc kubelet openshift-install /usr/local/bin
+$ cp oc kubelet openshift-install /usr/local/sbin
+$ cp oc kubelet openshift-install /usr/bin
+$ cp oc kubelet openshift-install /usr/sbin
