@@ -23,7 +23,7 @@ $ 10.0.0.101 *.apps.ocp4.example.com
 $ nslookup api.ocp4.example.com
 $ nslookup demoapp.apps.ocp4.example.com
 
-
+# create a build/jump machine and follow the below steps
 # Download the vSphere cert and update on build/jump host
 
 $ <vCenter>/certs/download.zip
