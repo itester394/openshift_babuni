@@ -1,0 +1,46 @@
+# Get the vSphere cluster details and validation
+$ username
+$ password
+$ admin access 
+
+$ ping vSphere IP
+$ ping vSphere host IP
+
+$ nslookup vSphere IP
+$ nslookup Sphere host IP
+
+$ curl -v telnet://vSphere IP:443
+$ curl -v telnet://vSphere host IP:443
+
+# Get or add and validation DNS details for API and Ingress
+$ 10.0.0.100 api.ocp4.example.com
+$ 10.0.0.101 *.apps.ocp4.example.com
+
+$ nslookup api.ocp4.example.com
+$ nslookup demoapp.apps.ocp4.example.com
+
+# Download all the OpenShift binary (oc cli, kubelet cli, openshift-installer, pull-secret, OVA-template optional)
+https://console.redhat.com/openshift
+https://mirror.openshift.com/pub/openshift-v4/x86_64/dependencies/rhcos/ (ova template for disconnected Env)
+
+# create a build/jump machine and follow the below steps
+
+$ ssh-keygen
+
+$ download oc cli
+$ download openshift-installer
+$ download pull-secret
+(https://console.redhat.com/openshift/install/vsphere/installer-provisioned)
+
+$ tar -xvzf openshift-install-linux.tar.gz
+$ tar -xvzf openshift-client-linux.tar.gz
+
+$ chmod +x oc
+$ chmod +x kubelet
+$ chmod +x openshift-install
+
+$ cp oc kubelet openshift-install /usr/local/bin
+$ cp oc kubelet openshift-install /usr/local/sbin
+$ cp oc kubelet openshift-install /usr/bin
+$ cp oc kubelet openshift-install /usr/sbin
+
