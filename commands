@@ -6,5 +6,17 @@ $ skopeo copy <local-images> --dest-creds=username:password docker://<target-reg
 $ skopeo copy --src-creds=user:password --dest-creds=user:password docker://<registory/demo/app1> docker://<registory/rhel/app1>
 $ skopeo delete docker://<registory/rhel/demo01>
 
+
+#OpenShift commands
+
 $oc import-image https:latest --confirm --form quay.io/rhel/httpd
 $oc get is
+
+
+
+#RH commands
+$ yes > /dev/null & 
+$ dd if=/dev/zero of=/mnt/swap.0 bs=1024 count=1048576
+
+
+
