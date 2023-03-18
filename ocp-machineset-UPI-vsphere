@@ -1,25 +1,29 @@
+##Get the cluster ID
+$ oc get infrastructure cluster -o jsonpath='{.status.infrastructureName}{"\n"}' 
+
+
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:
     creationTimestamp: null
     labels:
-        machine.openshift.io/cluster-api-cluster: oscp-zsqpl
-    name: worker-machine
+        machine.openshift.io/cluster-api-cluster: oscp-zsqpl # cluster ID
+    name: worker-machine # new worker node name
     namespace: openshift-machine-api
 spec:
     replicas: 1
     selector:
         matchLabels:
-            machine.openshift.io/cluster-api-cluster: oscp-zsqpl
-            machine.openshift.io/cluster-api-machineset: worker-machine
+            machine.openshift.io/cluster-api-cluster: oscp-zsqpl #cluster ID
+            machine.openshift.io/cluster-api-machineset: worker-machine # new worker node name
     template:
         metadata:
             creationTimestamp: null
             labels:
-                machine.openshift.io/cluster-api-cluster: oscp-zsqpl
+                machine.openshift.io/cluster-api-cluster: oscp-zsqpl #cluster ID
                 machine.openshift.io/cluster-api-machine-role: worker # e.g. worker, infra, master
                 machine.openshift.io/cluster-api-machine-type: worker # e.g. worker, infra, master
-                machine.openshift.io/cluster-api-machineset: worker-machine
+                machine.openshift.io/cluster-api-machineset: worker-machine # new worker node name
         spec:
             providerSpec:
                 value:
@@ -33,15 +37,15 @@ spec:
                         creationTimestamp: null
                     network:
                         devices:
-                        - networkName: "OCP-ERGO-INT-V1"
+                        - networkName: "OCP-ERGO-INT-V1" # network name
                     numCPUs: 2
                     numCoresPerSocket: 2
                     snapshot: ""
-                    template: rhcos-vmware.x86_64-4.12
+                    template: rhcos-vmware.x86_64-4.12 # RHCOS template name
                     userDataSecret:
                         name: worker-user-data
                     workspace:
-                        datacenter: MUC
+                        datacenter: MUC 
                         datastore: ocp-v1
                         resourcepool: /MUC/host/CL-DEV/Resources
                         folder: /MUC/vm/OpenShift-Services # e.g. /DC/vm/ocp45-2tdrm
