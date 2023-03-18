@@ -1,0 +1,60 @@
+# Install-config.yaml (modify the file based on your requirements)
+---
+apiVersion: v1
+baseDomain: example.com 
+compute: 
+- hyperthreading: Enabled 
+  name: worker
+  replicas: 3
+  platform:
+    vsphere: 
+      cpus: 2
+      coresPerSocket: 2
+      memoryMB: 8192
+      osDisk:
+        diskSizeGB: 120
+controlPlane: 
+  hyperthreading: Enabled 
+  name: master
+  replicas: 3
+  platform:
+    vsphere: 
+      cpus: 4
+      coresPerSocket: 2
+      memoryMB: 16384
+      osDisk:
+        diskSizeGB: 120
+metadata:
+  name: cluster 
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.0.0.0/16
+  networkType: OVNKubernetes 
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  vsphere:
+    vcenter: your.vcenter.server
+    username: username
+    password: password
+    datacenter: datacenter
+    defaultDatastore: datastore
+    folder: folder
+    resourcePool: resource_pool 
+    diskType: thin 
+    network: VM_Network
+    cluster: vsphere_cluster_name 
+    apiVIPs:
+      - api_vip
+    ingressVIPs:
+      - ingress_vip
+    diskType: thik
+    folder: "/MUC/vm/openshift-poc"
+    clusterOSImage: http://10.10.10.100/rhcos/image.ova
+fips: false
+pullSecret: '{"auths": ...}'
+sshKey: 'ssh-ed25519 AAAA...'
+---
