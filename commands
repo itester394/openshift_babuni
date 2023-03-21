@@ -35,7 +35,8 @@ $ while sleep 2; do date; done
 $ while sleep 1; do curl 192.168.56.110; done 
 
 $ yum -y install figlet
-$figlet "OpenShift"
+$ figlet "OpenShift"
+$ figlet -f big "OpenShift"
 
 
 
