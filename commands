@@ -38,6 +38,14 @@ $ yum -y install figlet
 $ figlet "OpenShift"
 $ figlet -f big "OpenShift"
 
+$ yum -y install curl telnet nmap
+$ curl -v telnet://<dest-IP>:<port>
+$ curl -v telnet://10.1.100.200:443
+$ npam -p <port> <dest-IP>
+$ nmap -p 22 10.1.10.100
+
+
+
 
 
 
