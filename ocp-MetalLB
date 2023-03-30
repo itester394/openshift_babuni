@@ -40,3 +40,18 @@ Step-04:
 $ oc get svc (get the external IP)
 $ curl -v <external-IP>:8080
 
+
+
+
+# Troubleshooting. If its not woking 
+# get the SVC externalIP
+# add above external IP to node interface
+
+$ kubectl get svc
+$ ssh node
+$ ip addr add 10.1.10.100/24 dev ens192
+
+$ curl 10.1.10.100:80
+
+
+
