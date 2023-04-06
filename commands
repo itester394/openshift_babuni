@@ -45,7 +45,10 @@ $ npam -p <port> <dest-IP>
 $ nmap -p 22 10.1.10.100
 
 
-
+$ openshift-install explain --help
+$ openshift-install explain installconfig
+$ openshift-install explain installconfig.networking
+$ openshift-install explain installconfig.platform.aws
 
 
 
