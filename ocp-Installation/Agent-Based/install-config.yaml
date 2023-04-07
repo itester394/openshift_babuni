@@ -1,0 +1,41 @@
+# install-config.yaml
+
+apiVersion: v1
+baseDomain: example.com
+compute:
+- architecture: amd64
+  hyperthreading: Enabled
+  name: worker
+  replicas: 0
+controlPlane:
+  architecture: amd64
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+metadata:
+  name: oscp
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 10.10.100.0/24
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  baremetal:
+    hosts:
+      - name: assister-master-0
+        role: master
+        bootMACAddress: 00:50:56:b4:bc:be
+      - name: assister-master-1
+        role: master
+        bootMACAddress: 00:50:56:b4:06:72
+      - name: assister-master-2
+        role: master
+        bootMACAddress: 00:50:56:b4:ae:5c
+    apiVIP: "10.10.100.180"
+    ingressVIP: "10.10.100.181"
+pullSecret: ''
+sshKey: ''
