@@ -17,7 +17,7 @@ $ nslookup api.ocp4.example.com
 $ nslookup demoapp.apps.ocp4.example.com
 
 $ create blank vms (master0, master1,master2, worker0, worker1, worker3) on vsphere
-$ get the MAC address for all the vms and use those MAC address inside of 
+$ get the MAC address for all the vms and use those MAC address inside of install-config.yaml and agent-config.yaml
 
 # create a build/jump machine and follow the below steps
 
