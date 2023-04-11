@@ -1,13 +1,15 @@
+https://cloud.redhat.com/blog/meet-the-new-agent-based-openshift-installer-1
+
 # pre configuration tasks
 
 # Get the vSphere cluster details and validation
 
-$ username
-$ password
-$ admin access 
+> username
+> password
+> admin access 
 
-$ dhcp server configuration
-$ dns server configuration
+> dhcp server configuration
+> dns server configuration
 
 # Get or add and validation DNS details for API and Ingress
 $ 10.0.0.100 api.ocp4.example.com
@@ -16,10 +18,22 @@ $ 10.0.0.101 *.apps.ocp4.example.com
 $ nslookup api.ocp4.example.com
 $ nslookup demoapp.apps.ocp4.example.com
 
-$ create blank vms (master0, master1,master2, worker0, worker1, worker3) on vsphere
-$ get the MAC address for all the vms and use those MAC address inside of install-config.yaml and agent-config.yaml
+> create blank vms (master0, master1,master2, worker0, worker1, worker3) on vsphere
+> get the MAC address for all the vms and use those MAC address inside of install-config.yaml and agent-config.yaml
+
+
 
 # create a build/jump machine and follow the below steps
 
-
+> download openshift-installer
+$ mkdir ocp
+$ copy install-config.yaml agent-config.yaml ocp
+$ openshift-install agent create image --dir ocp
+$ ls (get the new iso image)
+> mount this ISO image and boot the all master and worker nodes
+> monitor the installation logs 
+$ export KUBECONFIG=ocp/auth/kubeconfig
+$ openshift-install --dir <install_directory> agent wait-for bootstrap-complete --log-level=info
+$ openshift-install agent wait-for install-complete --dir ocp
+$ oc get nodes
 
