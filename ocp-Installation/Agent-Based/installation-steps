@@ -26,7 +26,7 @@ $ nslookup demoapp.apps.ocp4.example.com
 # create a build/jump machine and follow the below steps
 
 > download openshift-installer
-$ mkdir ocp
+$ mkdir ocp 
 $ copy install-config.yaml agent-config.yaml ocp
 $ openshift-install agent create image --dir ocp
 $ ls (get the new iso image)
