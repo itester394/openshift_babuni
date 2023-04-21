@@ -1,0 +1,49 @@
+# OpenSHift BareMetal Installation process
+# OpenShift AnyPlatform Installation process
+
+
+Plan:
+  1) Master nodes are RHEV VMs
+  2) Worker nodes are BareMetal 
+  3) Worker custom configuration
+  4) Disk Mirror with RAID
+  5) Bond0 configuration for network interface
+  6) Additional MC configuration for Disk Mirror with Raid0
+  7) Bond0 configuration with custom ISO file
+  
+  
+  
+Instalation steps:
+------------------
+
+  1) Master nodes 3
+  2) Worker nodes 2
+  3) DNS configuration
+      > master0
+      > master1
+      > master2
+      > worker0
+      > worker1
+      > api
+      > api-int
+      > *.apps
+      > bootstrap
+  4) Dhcp configuration 
+      > master0   (MAC: IP: hostname)
+      > master1   (MAC: IP: hostname)
+      > master2   (MAC: IP: hostname)
+      > bootstrap (MAC: IP: hostname)  
+      > worker0   (MAC: IP: hostname) 
+      > worker1   (MAC: IP: hostname) 
+      Note:
+      1: Worker: mentione 2 MAC address 'eth0 and eth1' on DHCP congif file. cause we dont know which MAC address will take Bond0 during the bond0 
+         configuration.
+      2: Worker node will get boot using RHCOS-live.iso(custom ISO), and try to inject the http://10.1.1.100/worker.ign. if it will show connnection 
+         error, please change the MAC address on DHCP configuration file and mention 2nd interface MAC address
+         
+         
+      
+      
+      
+      
+      
