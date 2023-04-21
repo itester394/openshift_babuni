@@ -57,10 +57,29 @@ Pratical steps:
   $ mkdir config
   $ cp install-config.yaml config
   $ openshift-install create mainfests --dir=config
-  $ vi raid1.b
+ 
+  $ vi raid1-storage.bu (Software Raid0 configuration for worker baremetal node)
+  $ butan raid1-storage.bu config/openshift/raid1-storage.yaml
+  $ Optional: all chrony and other MC if require
   
+  $ openshift-install create ignition-configs --dir=config
+  
+  $ tree config
+  $ cp config/*.ign /var/www/html/ignition
+  $ systeemctl restart httpd
+  $ curl http://<ip>/ignition/bootstrap.ign 
+ 
+
+Install and configure OpenShift nodes: (without custom ISO)
+
+  $ boot the bootstrap, master node using below process (note: not worker, worker installation process is different)
+  $ Map the rhcos-live.iso and boot the boorstrap, master node
+  $ Once you will get prompt execute the below command
+  $ coreos-installer install --ignition-url=http://<ip>.ignition/bootstrap.ign /dev/sda --insecure-ignition
+  $ coreos-installer install --ignition-url=http://<ip>.ignition/master.ign /dev/sda --insecure-ignition   
       
-      
-      
-      
+Install and configure OpenShift nodes: (with custom ISO) 
+  $ Create file for bond0 configuration
+      > vi bond0.yaml
+      > 
       
