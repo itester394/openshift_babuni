@@ -77,7 +77,8 @@ Install and configure OpenShift nodes: (without custom ISO)
   $ Once you will get prompt execute the below command
   $ coreos-installer install --ignition-url=http://<ip>.ignition/bootstrap.ign /dev/sda --insecure-ignition
   $ coreos-installer install --ignition-url=http://<ip>.ignition/master.ign /dev/sda --insecure-ignition   
-      
+  $ coreos-installer install --ignition-url=http://<ip>.ignition/worker.ign /dev/sda --insecure-ignition    
+
 Install and configure OpenShift nodes: (with custom ISO) 
   $ Create file for bond0 configuration
       > vi bond0.yaml
