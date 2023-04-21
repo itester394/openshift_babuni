@@ -124,4 +124,19 @@ Validation:
   $ cat /proc/mdstat (validate the raid configuration)
   $ ip a (validate the bond0 configuration)
   
+ 
+ 
+Ip issues on node:
+------------------
+  1) Check the DHCP conf file 
+  2) Check the MAC address
+  3) Restart the node forcefully 
+  
+  4) Boot the node with custom ISO for bond0 config, dont add --dest-ignition and --dest-device.
+     boot the node and check the IP config, whether everything looks good or any issues. 
+     
+   
+  5) oc get po -n openshift-machine-api
+     oc logs po
+     
   
