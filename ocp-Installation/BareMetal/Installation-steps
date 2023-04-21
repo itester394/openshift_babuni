@@ -58,7 +58,7 @@ Pratical steps:
   $ cp install-config.yaml config
   $ openshift-install create mainfests --dir=config
  
-  $ vi raid1-storage.bu (Software Raid0 configuration for worker baremetal node)
+  $ vi raid1-storage.bu (Software Raid0 configuration for worker baremetal node /dev/sda /dev/sdb)
   $ butan raid1-storage.bu config/openshift/raid1-storage.yaml
   $ Optional: all chrony and other MC if require
   
@@ -71,16 +71,54 @@ Pratical steps:
  
 
 Install and configure OpenShift nodes: (without custom ISO)
-
+-----------------------------------------------------------
   $ boot the bootstrap, master node using below process (note: not worker, worker installation process is different)
   $ Map the rhcos-live.iso and boot the boorstrap, master node
-  $ Once you will get prompt execute the below command
+  $ Once you will get the prompt, execute the below command
   $ coreos-installer install --ignition-url=http://<ip>.ignition/bootstrap.ign /dev/sda --insecure-ignition
   $ coreos-installer install --ignition-url=http://<ip>.ignition/master.ign /dev/sda --insecure-ignition   
-  $ coreos-installer install --ignition-url=http://<ip>.ignition/worker.ign /dev/sda --insecure-ignition    
+  $ coreos-installer install --ignition-url=http://<ip>.ignition/worker.ign /dev/sda --insecure-ignition  
+  
 
 Install and configure OpenShift nodes: (with custom ISO) 
-  $ Create file for bond0 configuration
-      > vi bond0.yaml
-      > 
-      
+---------------------------------------------------------
+  $ mkdir bootstrap-custom-iso
+  $ copy rhcos-live.iso boostrap.ign 
+  $ coreos-installer iso customize rhcos-live.iso --dest-ignition bootstrap.ign --dest-device /dev/sda 
+   
+  $ mkdir master-custom-iso
+  $ copy rhcos-live.iso boostrap.ign 
+  $ coreos-installer iso customize rhcos-live.iso --dest-ignition master.ign --dest-device /dev/sda 
+  
+  $ mkdir worker-custom-iso
+  $ copy rhcos-live.iso boostrap.ign 
+  $ coreos-installer iso customize rhcos-live.iso --dest-ignition worker.ign --dest-device /dev/sda 
+  
+  $ Map the new custom ISO and boot the node (Note:no need to add or pass additional parameter)
+
+Install and configure OpenShift nodes: (with custom ISO with bond0 configuration)  
+---------------------------------------------------------
+  $ mkdir worker-custom-iso ; cd worker-custom-iso
+  $ cp ../rhcos-live.iso worker.ign .
+  $ touch bond0.nmconnection
+  $ touch ens0.nmconnection
+  $ touch ens1.nmconnection
+  
+  $ coreos-installer iso custom rhcos-live.iso --network-keyfile bond0.nmconnection --network-keyfile ens0.nmconnection \
+    --network-keyfile ens1.nmconnection --dest-ignition worker.ign --dest-device /dev/sda 
+   
+   (Note: Here --dest-device /dev/sda is the one of mirror disk name)
+   
+  $ Boot the worker nodes using custom ISO (Note:no need to add or pass additional parameter)
+  
+  
+Validation:
+-----------
+  $ oc get csr
+  $ oc approve csr
+  $ login to node 
+  $ lsblk (validate the raid configuration)
+  $ cat /proc/mdstat (validate the raid configuration)
+  $ ip a (validate the bond0 configuration)
+  
+  
