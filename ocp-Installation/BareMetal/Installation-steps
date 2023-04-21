@@ -38,7 +38,7 @@ Instalation steps:
       > worker0   (MAC: IP: hostname) 
       > worker1   (MAC: IP: hostname) 
       Note:
-      1: Worker: mentione 2 MAC address 'eth0 and eth1' on DHCP congif file. cause we dont know which MAC address will take Bond0 during the bond0 
+      1: Worker: mention 2 MAC address for 'eth0 and eth1' on DHCP congif file. cause we dont know which MAC address will take Bond0 during the bond0 
          configuration.
       2: Worker node will get boot using RHCOS-live.iso(custom ISO), and try to inject the http://10.1.1.100/worker.ign. if it will show connnection 
          error, please change the MAC address on DHCP configuration file and mention 2nd interface MAC address
@@ -85,18 +85,21 @@ Install and configure OpenShift nodes: (with custom ISO)
   $ mkdir bootstrap-custom-iso
   $ copy rhcos-live.iso boostrap.ign 
   $ coreos-installer iso customize rhcos-live.iso --dest-ignition bootstrap.ign --dest-device /dev/sda 
-   
+  $ mv rhcos-live.iso rhcos-bootstrap.iso
+  
   $ mkdir master-custom-iso
   $ copy rhcos-live.iso boostrap.ign 
   $ coreos-installer iso customize rhcos-live.iso --dest-ignition master.ign --dest-device /dev/sda 
+  $ mv rhcos-live.iso rhcos-master.iso
   
   $ mkdir worker-custom-iso
   $ copy rhcos-live.iso boostrap.ign 
   $ coreos-installer iso customize rhcos-live.iso --dest-ignition worker.ign --dest-device /dev/sda 
+  $ mv rhcos-live.iso. rhcos-worker.iso
   
   $ Map the new custom ISO and boot the node (Note:no need to add or pass additional parameter)
 
-Install and configure OpenShift nodes: (with custom ISO with bond0 configuration)  
+Install and configure OpenShift nodes: (with custom ISO and bond0 configuration)  
 ---------------------------------------------------------
   $ mkdir worker-custom-iso ; cd worker-custom-iso
   $ cp ../rhcos-live.iso worker.ign .
@@ -107,7 +110,7 @@ Install and configure OpenShift nodes: (with custom ISO with bond0 configuration
   $ coreos-installer iso custom rhcos-live.iso --network-keyfile bond0.nmconnection --network-keyfile ens0.nmconnection \
     --network-keyfile ens1.nmconnection --dest-ignition worker.ign --dest-device /dev/sda 
    
-   (Note: Here --dest-device /dev/sda is the one of mirror disk name)
+   (Note: Here --dest-device /dev/sda is the one of the mirror disk name)
    
   $ Boot the worker nodes using custom ISO (Note:no need to add or pass additional parameter)
   
