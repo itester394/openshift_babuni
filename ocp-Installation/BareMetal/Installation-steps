@@ -15,6 +15,8 @@ Plan:
   
 Instalation steps:
 ------------------
+  0) Haproxy installation and configuration
+  0) httpd installation and configuration
 
   1) Master nodes 3
   2) Worker nodes 2
@@ -41,7 +43,22 @@ Instalation steps:
       2: Worker node will get boot using RHCOS-live.iso(custom ISO), and try to inject the http://10.1.1.100/worker.ign. if it will show connnection 
          error, please change the MAC address on DHCP configuration file and mention 2nd interface MAC address
          
-         
+  5) Download OC CLI tools
+  6) Download openshift-installer 
+  7) Download pull-secret
+  8) Download butane tools
+  9) Download coseos-installer
+  10) Download RHCOS-live.iso
+  
+  11) Create install-config.yaml file
+  
+Pratical steps:
+---------------
+  $ mkdir config
+  $ cp install-config.yaml config
+  $ openshift-install create mainfests --dir=config
+  $ vi raid1.b
+  
       
       
       
