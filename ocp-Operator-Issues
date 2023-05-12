@@ -1,1 +1,15 @@
+# When you are trying to install operator and its getting failed state
 
+$ oc get sub
+$ oc get og
+$ oc get installplan
+$oc get csv
+
+$ oc get job -n openshift-marketplace
+$ oc get po -n openshift-marketplace
+
+$ oc get po -n openshift-operator-lifecycle-manager
+
+$ oc get crd| grep <operatorname>
+
+Validate above resources and delete it 
