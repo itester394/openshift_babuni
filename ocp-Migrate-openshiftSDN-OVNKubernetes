@@ -43,4 +43,26 @@ Process:
   $ oc get po -n openshift-ovn-kubernetes
   
   
+  
+  
+  Note: After migrated to OVNKubernetes, EgressNetworkPolicy will not work. cause the Kind resource will get change.
+  https://access.redhat.com/solutions/7005009
+
+...
+apiVersion: k8s.ovn.org/v1
+kind: EgressFirewall                             #<----- Change the kind from EgressNetworkPolicy  to EgressFirewall
+metadata:
+  name: default
+  namespace: <namespace> 
+spec:
+  egress:
+  - to:
+      cidrSelector: <api_server_address_range> 
+    type: Allow
+# ...
+  - to:
+      cidrSelector: 0.0.0.0/0 
+    type: Deny
+...
+  
 
