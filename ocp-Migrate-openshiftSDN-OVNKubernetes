@@ -1,0 +1,46 @@
+# Process to Upgrade OpenShift Network from openshift-SDN to OVN-Kubernetes
+https://docs.openshift.com/container-platform/4.12/networking/ovn_kubernetes_network_provider/migrate-from-openshift-sdn.html
+
+
+
+1) Check the cluster supported version whether OVNKubernetes network is supported or not.
+2) You can't roll back to openshift-SDN network after migrated to OVN-Kubernetes
+3) Cluster should be on healthy state
+
+Process:
+  $ oc get Network.config.openshift.io cluster -o yaml > cluster-openshift-sdn.yaml
+  $ oc patch Network.operator.openshift.io cluster --type='merge' --patch '{ "spec": { "migration": { "networkType": "OVNKubernetes" } } }'
+  Note: Wait for MC apply to all the node. it will take some times. This step does not deploy OVN-Kubernetes immediately
+  
+  # Monitoring status:
+  $ oc describe node | egrep "hostname|machineconfig" [optional: monitor MC status]
+  $ oc get machineconfig <config_name> -o yaml | grep ExecStart [Optional: machineconfiguration.openshift.io/currentConfig]
+  $  oc get pod -n openshift-machine-config-operator [Optional: If a node is stuck in the NotReady state]
+  $ oc logs <pod> -n openshift-machine-config-operator [Optional: ]
+  
+  
+  # To start the migration, configure the OVN-Kubernetes network: 
+  $ oc patch Network.config.openshift.io cluster --type='merge' --patch '{ "spec": { "networkType": "OVNKubernetes" } }'
+  $ oc -n openshift-multus rollout status daemonset/multus
+  
+  $ reboot all the node manually 
+  
+  # Confirm that the migration succeeded:
+  $ oc get network.config/cluster -o jsonpath='{.status.networkType}{"\n"}'
+  $ oc get nodes
+  $ oc get pods --all-namespaces -o wide --sort-by='{.spec.nodeName}'
+  $ oc get co
+  
+  
+  # Complete the following steps only if the migration succeeds and your cluster is in a good state:
+  $ oc patch Network.operator.openshift.io cluster --type='merge' --patch '{ "spec": { "migration": null } }'
+  $ oc patch Network.operator.openshift.io cluster --type='merge' --patch '{ "spec": { "defaultNetwork": { "openshiftSDNConfig": null } } }'
+  $ oc delete namespace openshift-sdn
+  
+  # Post validation
+  $ oc projects| grep openshift-sdn
+  $ oc projects| grep openshift-ovn-kubernetes
+  $ oc get po -n openshift-ovn-kubernetes
+  
+  
+
