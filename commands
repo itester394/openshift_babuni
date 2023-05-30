@@ -25,7 +25,8 @@ $oc completion bash | sudo tee /etc/bash_completion.d/openshift > /dev/null
 
 $ oc get nodes -o custom-columns=name:.metadata.name --no-headers
 
-
+$ oc get cronjob
+$oc create job -n openshift-authentication --from=cronjob/<cronjob-name> test-cronjob
 
 
 #RH commands
