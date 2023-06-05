@@ -17,16 +17,20 @@ $ for x in $(oc -n demo get po -l deployment=demo | awk ‘{print $1}’); do oc
 $ for i in {1..100000}; do date; oc login -u e674434adm -p $p https://api.ocp.example.com:6443 ;done
 
 $ openssl x509 -text -noout -in <(openssl s_client -connect api.oscp.example.com:6443)| less
+$ openssl s_client -connect <url:443> | openssl x509 -noout -dates 
 
 $ oc completion bash > /etc/bash_completion.d/openshift
 $ openshift-install completion bash > /etc/bash_completion.d/openshift-install
 $ source <(oc completion bash)
-$oc completion bash | sudo tee /etc/bash_completion.d/openshift > /dev/null
+$ oc completion bash | sudo tee /etc/bash_completion.d/openshift > /dev/null
 
 $ oc get nodes -o custom-columns=name:.metadata.name --no-headers
 
 $ oc get cronjob
-$oc create job -n openshift-authentication --from=cronjob/<cronjob-name> test-cronjob
+$ oc create job -n openshift-authentication --from=cronjob/<cronjob-name> test-cronjob
+
+
+
 
 
 #RH commands
