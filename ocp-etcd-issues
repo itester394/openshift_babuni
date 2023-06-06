@@ -10,3 +10,4 @@ https://access.redhat.com/solutions/6171352
 $ etcdctl alarm list 
 $ oc get cs [Check the ETCD, Scheduler and controller status]
 $ podman system prune -a -f [Remove old and unused images for nodes]
+$ etcdctl endpoint status [check the etcd DB size. it should not reach 400MB]
