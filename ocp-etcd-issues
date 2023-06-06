@@ -1,0 +1,12 @@
+# OpenShift ETCD member issues.
+
+# Replace ETCD unhealthy member
+https://docs.openshift.com/container-platform/4.10/backup_and_restore/control_plane_backup_and_restore/replacing-unhealthy-etcd-member.html#restore-replace-crashlooping-etcd-member_replacing-unhealthy-etcd-member
+
+# Delete ETCD data
+https://access.redhat.com/solutions/6171352
+
+# Additional command
+$ etcdctl alarm list 
+$ oc get cs [Check the ETCD, Scheduler and controller status]
+$ podman system prune -a -f [Remove old and unused images for nodes]
