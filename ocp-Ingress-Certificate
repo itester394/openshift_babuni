@@ -1,2 +1,59 @@
 # Process to create own root and ingress certificate.
 
+1) Create new Root.key certificate
+$ openssl genrsa  -out root.key 4096
+
+2) Created new RootCA.crt
+openssl req -new -x509 -days 3650 -key root.key -out root-CA.crt
+
+3) Created new Ingress.key 
+openssl genrsa -out ingress.key 4096
+
+4) Created new Ingress.csr 
+$ vi config.txt
+
+$cat config.txt
+[req]
+default_bits = 3072
+distinguished_name = req_distinguished_name
+req_extensions = req_ext
+prompt = no
+default_md = sha256
+
+[req_distinguished_name]
+C   = Ge
+ST  = Dusseldorf
+L   = Dusseldorf
+O   = Beon
+OU  = DevOps
+CN  = *.apps.oscp.intern.beon.net
+
+[req_ext]
+extendedKeyUsage = serverAuth, clientAuth
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.0 = *.apps.oscp.intern.beon.net
+$
+
+openssl req -new -key ingress.key -out ingress.csr -config config.txt
+
+5) Self signed Ingress certificate using root.key and root.crt
+openssl x509 -req -days 365 -in ingress.csr -CA root-CA.crt -CAkey root.key -CAcreateserial -out ingress.crt
+
+Signature ok
+subject=C = IN, ST = Karnataka, L = Bengaluru, O = GoLinuxCloud, OU = R&D, CN = ban21.example.com
+Getting CA Private Key
+
+$ openssl x509 -req -days 365 -in ingress.csr -CA rootCA.crt -CAkey root.key -CAcreateserial -out ingress.crt -extensions req_ext -extfile config.txt
+
+
+6) Updated the certificate on cluster
+
+$ oc create configmap custom-ca --from-file=ca-bundle.crt=root-CA.crt -n openshift-config
+
+$ oc patch proxy/cluster --type=merge  --patch='{"spec":{"trustedCA":{"name":"custom-ca"}}}'
+
+$ oc create secret tls ingress-cert --cert=ingress.crt--key=ingress.key  -n openshift-ingress
+
+$ oc patch ingresscontroller.operator default  --type=merge -p '{"spec":{"defaultCertificate": {"name": "ingress-cert"}}}' -n openshift-ingress-operator
