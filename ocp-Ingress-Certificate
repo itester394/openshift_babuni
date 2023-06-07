@@ -1,5 +1,8 @@
-# Process to create own root and ingress certificate.
+# Process to create own root, API and ingress certificate.
+# Process to replace API and ingress certificate 
 
+https://docs.openshift.com/container-platform/4.13/security/certificates/replacing-default-ingress-certificate.html
+https://docs.openshift.com/container-platform/4.13/security/certificates/api-server.html
 
 
 
@@ -70,3 +73,12 @@ https://docs.vmware.com/en/VMware-Adapter-for-SAP-Landscape-Management/2.1.0/Ins
 $ oc new-app httpd -n demo
 $ oc create route edge --service httpd
 $ get the route url and access it from browser
+
+
+
+
+11) Replace the API certificate 
+https://docs.openshift.com/container-platform/4.13/security/certificates/api-server.html
+$ oc create secret tls api-cert --cert=root-CA.crt --key=root.key -n openshift-config
+$ oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates":[{"names": ["api.oscp.intern.ibm.com"],"servingCertificate": {"name": "api-cert"}}]}}}' 
+$ 
