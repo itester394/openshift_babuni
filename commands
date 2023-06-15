@@ -48,6 +48,7 @@ $ curl -v telnet://<dest-IP>:<port>
 $ curl -v telnet://10.1.100.200:443
 $ npam -p <port> <dest-IP>
 $ nmap -p 22 10.1.10.100
+$ nc -vzw 2 <service-name>  <port>
 
 
 $ openshift-install explain --help
