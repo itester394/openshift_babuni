@@ -72,6 +72,7 @@ spec:
 =============
 
 # Enabling IpSecConfig for encrypt the connection between node.
+https://docs.openshift.com/container-platform/4.13/post_installation_configuration/network-configuration.html#post-install-configuring-ipsec-ovn
 
 $ oc patch networks.operator.openshift.io cluster --type=merge -p '{"spec":{"defaultNetwork":{"ovnKubernetesConfig":{"ipsecConfig":{ }}}}}'
 
