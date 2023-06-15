@@ -63,7 +63,7 @@ $ oc patch ingresscontroller.operator default  --type=merge -p '{"spec":{"defaul
 
 
 
-8) Note: this is the local rootCa and approved the Ingress certificate. so please add this rootCA to your browser
+8) Note: this is the local rootCa and approved the Ingress certificate. so please add this rootCA.crt to your browser
 https://docs.vmware.com/en/VMware-Adapter-for-SAP-Landscape-Management/2.1.0/Installation-and-Administration-Guide-for-VLA-Administrators/GUID-D60F08AD-6E54-4959-A272-458D08B8B038.html
 
 
