@@ -1,0 +1,13 @@
+# Defalut when you will apply MC the cluster node will get reboot one by one and applied the changes.
+# How to apply multiple MC on multiple node  and reboot multiple node.
+https://docs.openshift.com/container-platform/4.13/post_installation_configuration/node-tasks.html#modify-unavailable-workers_post-install-node-tasks
+
+
+Note: Before configure this changes, please check your cluster capacity.
+
+$ oc get mcp
+$ oc edit mcp/worker
+ ...
+ spec:
+   maxUnavailable: <node_count>
+ ...   
