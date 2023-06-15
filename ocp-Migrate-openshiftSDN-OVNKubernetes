@@ -44,9 +44,11 @@ Process:
   
   
   
-  
+=========
+
   Note: After migrated to OVNKubernetes, EgressNetworkPolicy will not work. cause the Kind resource will get change.
   https://access.redhat.com/solutions/7005009
+(Check also whether networkpolicy is working or not)
 
 ...
 apiVersion: k8s.ovn.org/v1
@@ -64,5 +66,12 @@ spec:
       cidrSelector: 0.0.0.0/0 
     type: Deny
 ...
-  
+
+
+
+=============
+
+# Enabling IpSecConfig for encrypt the connection between node.
+
+$ oc patch networks.operator.openshift.io cluster --type=merge -p '{"spec":{"defaultNetwork":{"ovnKubernetesConfig":{"ipsecConfig":{ }}}}}'
 
