@@ -1,0 +1,14 @@
+# If you are unable to see the latest operator after cluster upgrade, please update the catalogsource yaml file.
+
+Example: 
+  openshift-logging operator current installed version is 5.3
+  latest version is 5.7
+  but your web terminal logging version is showing 5.4
+
+Steeps to fix the issues.
+  1) Upgrade your cluster to latest version example 4.9 to 4.10 or 4.12
+  2) Update the catalogsource yaml file
+  3) oc edit catalogsource/<name> -n openshift-marketplace
+      spec:
+        image: container-proxy.services.eden/redhat/redhat-operator-index:v4.10
+        sourceType: grpc
