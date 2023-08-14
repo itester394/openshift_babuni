@@ -1,0 +1,43 @@
+#Cluster Log Forwarder is not working as extected after upgraded elasticsearch version from 7 to 8.
+#This is the additional configuration is require .
+
+
+Issue:
+2022-04-25 06:24:05 +0000 [warn]: [elasticsearch-secure] failed to flush the buffer. 
+retry_time=36 next_retry_seconds=2022-04-25 06:25:02 +0000 chunk="5dd7459d6d36c1e0875d29c091e3947f" 
+error_class=Fluent::Plugin::ElasticsearchOutput::RecoverableRequestFailure error="could not push logs to Elasticsearch cluster 
+({:host=>\"elasticsearch.example.com\", :port=>9200, :scheme=>\"https\", :user=>\"user\", :password=>\"obfuscated\"}): [400] 
+{\"error\":{\"root_cause\":[{\"type\":\"illegal_argument_exception\",\"reason\":\"Action/metadata line 
+[1] contains an unknown parameter [_type]\"}],\"type\":\"illegal_argument_exception\",\"reason\":\"Action/metadata line 
+[1] contains an unknown parameter [_type]\"},\"status\":400}" 
+
+
+
+https://access.redhat.com/solutions/6955339
+
+https://issues.redhat.com/browse/OBSDA-161
+
+https://issues.redhat.com/browse/LOG-2544
+
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  outputs:
+  - elasticsearch:
+      version: 8
+    name: elasticsearch
+    secret:
+      name: to-es
+    type: elasticsearch
+    url: https://external-es.e2e-test-namespace-rql86.svc:9200
+  pipelines:
+  - inputRefs:
+    - application
+    name: forward
+    outputRefs:
+    - elasticsearch
+
+Note: only add version: 8 and restart the pod to fix the above issues
