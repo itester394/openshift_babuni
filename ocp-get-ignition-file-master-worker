@@ -1,0 +1,26 @@
+# How to get master and worker ignition file from running cluster
+
+
+https://access.redhat.com/solutions/5504291
+
+$ oc get no 
+$ oc get co 
+$ oc get mcp
+
+$ oc project openshift-machine-api
+$ oc get secret
+
+$ oc extract secret/master-user-data --to=- (If this ignition is not working, please use the below ignition)
+$ oc extract secret/master-user-data-managed --to=-
+
+$ oc extract secret/worker-user-data --to=- (If this ignition is not working, please use the below ignition)
+$ oc extract secret/worker-user-data-managed --to=-
+
+$ copy above data and put inside of a file
+$ vi worker.ign
+...
+...
+
+$ base64 -w0 worker.ign > worker.64
+$ or use web browser -> base64 encrypt -> 
+
