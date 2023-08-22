@@ -24,3 +24,8 @@ $ vi worker.ign
 $ base64 -w0 worker.ign > worker.64
 $ or use web browser -> base64 encrypt -> 
 
+
+
+$ curl -k https://api.YOUR_CLUSTER_NAME:22623/config/master | jq . | less -i
+$ curl -k https://api.YOUR_CLUSTER_NAME:22623/config/worker | jq . | less -i
+
