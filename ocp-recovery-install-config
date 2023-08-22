@@ -1,0 +1,6 @@
+# How to recover install-config.yaml file from 4.x cluster
+
+https://access.redhat.com/solutions/5279451
+
+$ oc -n kube-system extract cm/cluster-config-v1
+$ cat .openshift_install_state.json | jq -r '.["*installconfig.InstallConfig"].file.Data' | base64 -d > install-config.yaml
