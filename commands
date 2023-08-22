@@ -7,6 +7,13 @@ $ skopeo copy --src-creds=user:password --dest-creds=user:password docker://<reg
 $ skopeo delete docker://<registory/rhel/demo01>
 
 
+
+
+
+
+
+
+
 #OpenShift commands
 
 $ oc import-image https:latest --confirm --form quay.io/rhel/httpd
@@ -28,6 +35,17 @@ $ oc get nodes -o custom-columns=name:.metadata.name --no-headers
 
 $ oc get cronjob
 $ oc create job -n openshift-authentication --from=cronjob/<cronjob-name> test-cronjob
+
+$ oc get infrastructure/cluster -o yaml ##Check whether cluster is installed using UPI, IPI or any
+$ oc get cm cluster-config-v1 -n kube-system -o yaml
+
+
+
+
+
+
+
+
 
 
 
@@ -56,6 +74,8 @@ $ openshift-install explain installconfig
 $ openshift-install explain installconfig.networking
 $ openshift-install explain installconfig.networking.serviceNetwork
 $ openshift-install explain installconfig.platform.aws
+
+
 
 
 
