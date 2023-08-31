@@ -1,0 +1,55 @@
+# Openshift installation on AWS as a service provider ROSA
+
+https://docs.openshift.com/rosa/welcome/index.html
+
+
+Installation process:
+--------------------
+
+1) Create a account and get the account details from AWS console
+2) Install AWS CLI on your build machine
+https://aws.amazon.com/cli/
+3) Install ROSA cli on your build machine
+https://console.redhat.com/openshift/downloads
+4) Install oc cli on your build machine
+https://console.redhat.com/openshift/downloads
+
+
+Add OpenShift to Your AWS Account:
+---------------------------------
+From AWS market place, add the Redhat Openshift Service on AWS
+
+1) Navigate to Service → Containers → Red Hat OpenShift Service on AWS.
+2) Click Get started to access the Verify ROSA prerequisites page.
+3) If the You previously enabled ROSA checkmark is displayed, then you are already subscribed to ROSA.
+4) Otherwise, select I agree to share my contact information with Red Hat and then click Enable ROSA.
+
+
+Configure AWS credentials to your build machine:
+-----------------------------------------------
+$ aws configure
+AWS Access Key ID [None]: AKIAX
+AWS Secret Access Key [None]: j8X/hpha
+Default region name [None]: us-east-1
+Default output format [None]: <Enter>
+
+$ rosa login
+To login to your Red Hat account, get an offline access token at https://console.redhat.com/openshift/token/rosa
+? Copy the token and paste it here:
+
+
+Additional verification:
+-----------------------
+$ aws iam get-role --role-name "AWSServiceRoleForElasticLoadBalancing" 
+Note: above role you wil get from aws webconsole-> search rosa (redhat openshift service on aws)-> click and get started -> get the all details.
+
+$ rosa virify quota
+
+$ aws configure get region
+
+$  aws sts get-caller-identity
+
+$ rosa whoami
+
+
+
