@@ -1,0 +1,117 @@
+# Openshift installation on AWS as a service provider ROSA
+
+https://docs.openshift.com/rosa/welcome/index.html
+
+
+Installation prerequisite:
+--------------------
+
+1) Create a account and get the account details from AWS console
+2) Install AWS CLI on your build machine
+https://aws.amazon.com/cli/
+3) Install ROSA cli on your build machine
+https://console.redhat.com/openshift/downloads
+4) Install oc cli on your build machine
+https://console.redhat.com/openshift/downloads
+
+
+Add OpenShift to Your AWS Account:
+---------------------------------
+From AWS market place, add the Redhat Openshift Service on AWS
+
+1) Navigate to Service → Containers → Red Hat OpenShift Service on AWS.
+2) Click Get started to access the Verify ROSA prerequisites page.
+3) If the You previously enabled ROSA checkmark is displayed, then you are already subscribed to ROSA.
+4) Otherwise, select I agree to share my contact information with Red Hat and then click Enable ROSA.
+
+
+Configure AWS credentials to your build machine:
+-----------------------------------------------
+$ aws configure
+AWS Access Key ID [None]: AKIAX
+AWS Secret Access Key [None]: j8X/hpha
+Default region name [None]: us-east-1
+Default output format [None]: <Enter>
+
+$ rosa login
+To login to your Red Hat account, get an offline access token at https://console.redhat.com/openshift/token/rosa
+? Copy the token and paste it here:
+
+
+Additional verification:
+-----------------------
+$ aws iam get-role --role-name "AWSServiceRoleForElasticLoadBalancing" 
+Note: above role you wil get from aws webconsole-> search rosa (redhat openshift service on aws)-> click and get started -> get the all details.
+
+$ rosa virify quota
+
+$ aws configure get region
+
+$  aws sts get-caller-identity
+
+$ rosa whoami
+
+
+ROSA Installation Steps:
+-----------------------
+Create Account Roles
+
+$ rosa create account-roles (Manually validate and create. or execute the below command)
+
+$ rosa create account-roles --mode auto --yes
+
+$ rosa create account-roles --mode manual
+
+
+Create ROSA Cluster:
+-------------------
+
+$ rosa create cluster
+
+Cluster name: mycluster
+Deploy cluster using AWS STS: Yes
+OpenShift version: 4.12.14
+External ID (optional): <Enter>
+Operator roles prefix: mycluster-p5k3
+Multiple availability zones (optional): No
+AWS region: us-east-1
+PrivateLink cluster (optional): No
+Select Availability Zone:
+Compute Node Instance Type:
+Enable Auto Scaling: 
+Number Compute Nodes: 
+Machine CIDR:
+Service CIDR:
+Pod CIDR:
+Encrypt ETCD Data:
+
+[Note: Execute this script and get the full script on the screen to use that for ansible automation]
+
+Example: rosa create cluster --cluster-name mycluster --sts --role-arn arn:aws:iam::452954386616:role/ManagedOpenShift-Installer-Role --support-role-arn arn:aws:iam::452954386616:role/ManagedOpenShift-Support-Role --controlplane-iam-
+role arn:aws:iam::452954386616:role/ManagedOpenShift-ControlPlane-Role --worker- iam-role arn:aws:iam::452954386616:role/ManagedOpenShift-Worker-Role --operator- roles-prefix mycluster-p5k3 --region us-east-1 --version 4.12.14 --compute-nodes
+ 2 --compute-machine-type m5.xlarge --machine-cidr 10.0.0.0/16 --service-cidr
+172.30.0.0/16 --pod-cidr 10.128.0.0/14 --host-prefix 23
+
+
+
+$ rosa create operator-roles --cluster mycluster
+$ rosa create oidc-provider --cluster mycluster
+
+$ rosa create operator-roles --cluster mycluster  --mode auto --yes
+$ rosa create oidc-provider --cluster mycluster  --mode auto --yes
+
+
+$ rosa list clusters
+
+$ rosa describe cluster -c mycluster (Get the web console url and other details.)
+
+$ rosa logs install -c mycluster --watch
+
+
+
+#Access the ROSA Cluster:
+-------------------------
+$ rosa describe cluster -c clustername | grep console
+$ rosa create admin --cluster mycluster
+$ rosa download oc
+$ rosa delete admin --cluster mycluster
