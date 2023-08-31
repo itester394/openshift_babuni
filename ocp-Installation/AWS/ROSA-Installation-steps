@@ -43,13 +43,18 @@ Additional verification:
 $ aws iam get-role --role-name "AWSServiceRoleForElasticLoadBalancing" 
 Note: above role you wil get from aws webconsole-> search rosa (redhat openshift service on aws)-> click and get started -> get the all details.
 
-$ rosa virify quota
+$ rosa verify quota
+$ rosa verify quota --region=es-west-2
+
+$ rosa verity permissions
 
 $ aws configure get region
 
 $  aws sts get-caller-identity
 
 $ rosa whoami
+
+$ rosa init (Verify all the prerequisite condation are setisfied or not)
 
 
 ROSA Installation Steps:
@@ -107,7 +112,7 @@ $ rosa describe cluster -c mycluster (Get the web console url and other details.
 
 $ rosa logs install -c mycluster --watch
 
-
+$ rosa delete cluster --cluster=mycluster
 
 #Access the ROSA Cluster:
 -------------------------
